@@ -235,10 +235,18 @@ function endGame() {
   overlay.classList.remove('hidden');
 }
 
+function isValidStartLevel(v) {
+  return Number.isInteger(v) && v >= 1 && v <= MAX_START_LEVEL;
+}
+
+function computeDropInterval(lvl) {
+  return Math.max(100, 1000 - (lvl - 1) * 90);
+}
+
 function getSavedStartLevel() {
   try {
     const raw = parseInt(localStorage.getItem(START_LEVEL_KEY), 10);
-    if (Number.isInteger(raw) && raw >= 1 && raw <= MAX_START_LEVEL) return raw;
+    if (isValidStartLevel(raw)) return raw;
   } catch (e) {
     // localStorage unavailable (private mode, disabled, etc.) — fall back to default
   }
@@ -305,7 +313,7 @@ function init() {
   level = getSavedStartLevel();
   paused = false;
   gameOver = false;
-  dropInterval = Math.max(100, 1000 - (level - 1) * 90);
+  dropInterval = computeDropInterval(level);
   dropAccum = 0;
   lastTime = performance.now();
   next = randomPiece();
@@ -358,7 +366,7 @@ toggleControlsBtn.addEventListener('click', toggleControlsPanel);
 
 startLevelSelect.addEventListener('change', () => {
   const val = parseInt(startLevelSelect.value, 10);
-  if (Number.isInteger(val) && val >= 1 && val <= MAX_START_LEVEL) {
+  if (isValidStartLevel(val)) {
     saveStartLevel(val);
   }
 });
