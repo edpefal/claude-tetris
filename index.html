@@ -61,6 +61,28 @@
         <button id="restart-btn">Reiniciar</button>
       </div>
     </div>
+
+    <div id="pause-menu" class="pause-menu hidden">
+      <div class="pause-menu-box">
+        <p class="pause-menu-title">PAUSA</p>
+        <button id="resume-btn">Reanudar</button>
+        <button id="pause-restart-btn">Reiniciar</button>
+        <button id="toggle-controls-btn">Ver controles</button>
+        <div id="pause-controls" class="pause-controls hidden">
+          <ul>
+            <li><kbd>←</kbd><kbd>→</kbd> mover</li>
+            <li><kbd>↑</kbd> rotar</li>
+            <li><kbd>↓</kbd> bajar</li>
+            <li><kbd>Space</kbd> caída</li>
+            <li><kbd>P</kbd> / <kbd>Esc</kbd> pausa</li>
+          </ul>
+        </div>
+        <div class="pause-menu-level">
+          <label for="start-level-select">Nivel inicial</label>
+          <select id="start-level-select"></select>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="skins.js"></script>
