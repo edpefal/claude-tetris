@@ -159,3 +159,118 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Records / Start screen ---- */
+.hidden {
+  display: none !important;
+}
+
+.start-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: #7aa2f7;
+  margin-bottom: 4px;
+}
+
+.records-table {
+  border-collapse: collapse;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  min-width: 220px;
+}
+
+.records-table th,
+.records-table td {
+  padding: 4px 8px;
+  text-align: center;
+  color: #ccc;
+}
+
+.records-table th {
+  color: #555570;
+  font-size: 10px;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #2a2a3a;
+}
+
+.records-table td.records-empty {
+  color: #666;
+  padding: 12px 8px;
+}
+
+.records-highlight td {
+  color: #0f0f17;
+  background: #7aa2f7;
+  font-weight: 700;
+}
+
+.records-bests,
+.game-stats {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #888;
+}
+
+.records-bests strong {
+  color: #7aa2f7;
+}
+
+.game-stats strong {
+  color: #81c784;
+}
+
+.name-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.records-highlight-msg {
+  font-size: 12px;
+  color: #ffd54f;
+}
+
+#name-input {
+  background: #1a1a25;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  color: #e0e0e0;
+  padding: 6px 10px;
+  font-size: 13px;
+  text-align: center;
+  width: 140px;
+}
+
+#name-submit-btn,
+#play-btn,
+#reset-scores-btn {
+  background: #7aa2f7;
+  color: #0f0f17;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+#name-submit-btn:hover,
+#play-btn:hover,
+#reset-scores-btn:hover {
+  background: #9bbdff;
+}
+
+#reset-scores-btn {
+  background: transparent;
+  color: #e57373;
+  border: 1px solid #e57373;
+}
+
+#reset-scores-btn:hover {
+  background: rgba(229, 115, 115, 0.15);
+}

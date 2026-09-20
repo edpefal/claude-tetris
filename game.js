@@ -40,7 +40,7 @@ const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
 
-let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
+let board, current, next, score, lines, level, paused, gameOver = true, lastTime, dropAccum, dropInterval, animId, comboCount, maxCombo;
 
 function createBoard() {
   return Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
@@ -108,7 +108,11 @@ function clearLines() {
     score += (LINE_SCORES[cleared] || 0) * level;
     level = Math.floor(lines / 10) + 1;
     dropInterval = Math.max(100, 1000 - (level - 1) * 90);
+    comboCount++;
+    if (comboCount > maxCombo) maxCombo = comboCount;
     updateHUD();
+  } else {
+    comboCount = 0;
   }
 }
 
@@ -223,6 +227,9 @@ function endGame() {
   cancelAnimationFrame(animId);
   overlayTitle.textContent = 'GAME OVER';
   overlayScore.textContent = `Puntuación: ${score.toLocaleString()}`;
+  if (typeof showGameOverScores === 'function') {
+    showGameOverScores({ score, lines, level, combo: maxCombo });
+  }
   overlay.classList.remove('hidden');
 }
 
@@ -265,11 +272,15 @@ function init() {
   gameOver = false;
   dropInterval = 1000;
   dropAccum = 0;
+  comboCount = 0;
+  maxCombo = 0;
   lastTime = performance.now();
   next = randomPiece();
   spawn();
   updateHUD();
   overlay.classList.add('hidden');
+  const startScreenEl = document.getElementById('start-screen');
+  if (startScreenEl) startScreenEl.classList.add('hidden');
   cancelAnimationFrame(animId);
   animId = requestAnimationFrame(loop);
 }
@@ -301,4 +312,5 @@ document.addEventListener('keydown', e => {
 
 restartBtn.addEventListener('click', init);
 
-init();
+// The game no longer auto-starts on load: the start screen (scores.js)
+// calls init() when the JUGAR button is pressed.
