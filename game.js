@@ -40,7 +40,7 @@ const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
 
-let board, current, next, score, lines, level, paused, gameOver = true, lastTime, dropAccum, dropInterval, animId, comboCount, maxCombo;
+let board, current, next, score, lines, level, paused, gameOver = true, lastTime, dropAccum, dropInterval, animId, comboCount, maxCombo, startLevel;
 
 function createBoard() {
   return Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
@@ -106,7 +106,7 @@ function clearLines() {
   if (cleared) {
     lines += cleared;
     score += (LINE_SCORES[cleared] || 0) * level;
-    level = Math.floor(lines / 10) + 1;
+    level = startLevel + Math.floor(lines / 10);
     dropInterval = Math.max(100, 1000 - (level - 1) * 90);
     comboCount++;
     if (comboCount > maxCombo) maxCombo = comboCount;
@@ -268,6 +268,7 @@ function init() {
   score = 0;
   lines = 0;
   level = 1;
+  startLevel = level;
   paused = false;
   gameOver = false;
   dropInterval = 1000;
