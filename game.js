@@ -4,6 +4,8 @@ const COLS = 10;
 const ROWS = 20;
 const BLOCK = 30;
 
+// Piece color palettes now live per-skin in skins.js (see SKINS / currentSkin).
+// This array is kept only as the canonical piece-color-index reference (1-7).
 const COLORS = [
   null,
   '#4dd0e1', // I - cyan
@@ -158,18 +160,11 @@ function updateHUD() {
 
 function drawBlock(context, x, y, colorIndex, size, alpha) {
   if (!colorIndex) return;
-  const color = COLORS[colorIndex];
-  context.globalAlpha = alpha ?? 1;
-  context.fillStyle = color;
-  context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
-  // highlight
-  context.fillStyle = 'rgba(255,255,255,0.12)';
-  context.fillRect(x * size + 1, y * size + 1, size - 2, 4);
-  context.globalAlpha = 1;
+  currentSkin.drawBlock(context, x, y, colorIndex, size, alpha);
 }
 
 function drawGrid() {
-  ctx.strokeStyle = '#22222e';
+  ctx.strokeStyle = currentSkin.gridColor;
   ctx.lineWidth = 0.5;
   for (let c = 1; c < COLS; c++) {
     ctx.beginPath();
@@ -187,6 +182,8 @@ function drawGrid() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = currentSkin.boardBg;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   drawGrid();
 
   // board
@@ -210,6 +207,8 @@ function draw() {
 function drawNext() {
   const NB = 30;
   nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+  nextCtx.fillStyle = currentSkin.boardBg;
+  nextCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
   const shape = next.shape;
   const offX = Math.floor((4 - shape[0].length) / 2);
   const offY = Math.floor((4 - shape.length) / 2);
